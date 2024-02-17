@@ -4,9 +4,24 @@ import 'package:mini_proj/src/constants/colors.dart';
 import 'package:mini_proj/src/constants/image_strings.dart';
 import 'package:mini_proj/src/constants/text_string.dart';
 import 'package:mini_proj/src/features/authentication/screens/login_screen/login_screen.dart';
+import 'package:mini_proj/src/features/authentication/screens/signup_screen/validation/validation.dart';
 
-class SignupScreen extends StatelessWidget {
+
+class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
+
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+
+  final formField = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final nameController = TextEditingController();
+  final passController = TextEditingController();
+  final confPassController = TextEditingController();
+  bool passToggle = true;
 
   @override
   Widget build(BuildContext context) {
@@ -24,82 +39,126 @@ class SignupScreen extends StatelessWidget {
                   image: const AssetImage(splashImage),
                   height: size.height * 0.2,
                 ),
-                Text(wellBak),
-                Text(loginAcc),
+                const Text(wellBak),
+                const Text(loginAcc),
                 Form(
+                  key: formField,
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextFormField(
-                          decoration: InputDecoration(
+                          keyboardType: TextInputType.text,
+                          controller: nameController,
+                          decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.person_outline_outlined),
                             labelText: uName,
                             hintText: uName,
                             border: OutlineInputBorder(),
                           ),
+                          validator: Validation.validateUsername,
                         ),
                         const SizedBox(height: defaultSize),
                         TextFormField(
-                          decoration: InputDecoration(
+                          keyboardType: TextInputType.emailAddress,
+                          controller: emailController,
+                          decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.email_outlined),
                             labelText: email,
                             hintText: email,
                             border: OutlineInputBorder(),
                           ),
+                          validator: Validation.validateEmail,
                         ),
                         const SizedBox(height: defaultSize),
                         TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          controller: passController,
+                          obscureText: passToggle,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.fingerprint),
+                            prefixIcon: const Icon(Icons.fingerprint),
                             labelText: uPassword,
                             hintText: uPassword,
-                            border: OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                              onPressed: null,
-                              icon: Icon(Icons.remove_red_eye_sharp),
+                            border: const OutlineInputBorder(),
+                            suffix: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  passToggle = !passToggle;
+                                });
+                              },
+                              child: Icon(passToggle
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
                             ),
                           ),
+                          validator: Validation.validatePassword,
                         ),
                         const SizedBox(height: defaultSize),
                         TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          controller: confPassController,
+                          obscureText: passToggle,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.fingerprint),
+                            prefixIcon: const Icon(Icons.fingerprint),
                             labelText: confPass,
                             hintText: confPass,
-                            border: OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                              onPressed: null,
-                              icon: Icon(Icons.remove_red_eye_sharp),
+                            border: const OutlineInputBorder(),
+                            suffix: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  passToggle = !passToggle;
+                                });
+                              },
+                              child: Icon(passToggle
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
                             ),
                           ),
+                          validator: (value){
+                            if (value!.isEmpty) {
+                              return "Enter Password";
+                            }
+                            else if (value != passController.text) {
+                              return 'Passwords do not match';
+                            }
+                            return null;
+                        },
                         ),
-                        const SizedBox(height: loginSpace),
+                        const SizedBox(height: loginGap),
                         SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: accentColor,
                                   foregroundColor: darkColor),
-                              onPressed: () {},
-                              child: Text(signUp.toUpperCase()),
+                              onPressed: () {
+                                if (formField.currentState!.validate()) {
+                                  print("Success");
+                                }
+                              },
+                              child: Text(
+                                signUp.toUpperCase(),
+                                style: const TextStyle(
+                                  color: whiteColor,
+                                ),
+                              ),
                             )),
                         const SizedBox(height: loginSpace),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text("OR"),
+                            const Text("OR"),
                             const SizedBox(height: loginSpace),
                             SizedBox(
                               width: double.infinity,
                               child: OutlinedButton.icon(
-                                  icon: Image(
+                                  icon: const Image(
                                     image: AssetImage(googleIcon),
                                     width: 20.0,
                                   ),
                                   onPressed: () {},
-                                  label: Text(google)),
+                                  label: const Text(google)),
                             ),
                             TextButton(
                                 onPressed: () {
@@ -111,7 +170,7 @@ class SignupScreen extends StatelessWidget {
                                   );
                                 },
                                 child: Text.rich(TextSpan(children: [
-                                  TextSpan(text: alreadyAccount),
+                                  const TextSpan(text: alreadyAccount),
                                   TextSpan(text: login.toUpperCase())
                                 ])))
                           ],

@@ -4,8 +4,17 @@ import 'package:mini_proj/src/constants/image_strings.dart';
 import 'package:mini_proj/src/constants/sizes.dart';
 import 'package:mini_proj/src/constants/text_string.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final nameController = TextEditingController();
+  final passController = TextEditingController();
+  bool passToggle = true;
 
   @override
   Widget build(BuildContext context) {
@@ -23,16 +32,18 @@ class LoginScreen extends StatelessWidget {
                   image: const AssetImage(splashTopIcon),
                   height: size.height * 0.2,
                 ),
-                Text(wellBak),
-                Text(loginAcc),
+                const Text(wellBak),
+                const Text(loginAcc),
                 Form(
                   child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20.0),
+                    padding: const EdgeInsets.symmetric(vertical: 20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextFormField(
-                          decoration: InputDecoration(
+                          keyboardType: TextInputType.text,
+                          controller: nameController,
+                          decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.person_outline_outlined),
                             labelText: uName,
                             hintText: uName,
@@ -41,14 +52,23 @@ class LoginScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: defaultSize),
                         TextFormField(
+                          keyboardType: TextInputType.emailAddress,
+                          controller: passController,
+                          obscureText: passToggle,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.fingerprint),
+                            prefixIcon: const Icon(Icons.fingerprint),
                             labelText: uPassword,
                             hintText: uPassword,
-                            border: OutlineInputBorder(),
-                            suffixIcon: IconButton(
-                              onPressed: null,
-                              icon: Icon(Icons.remove_red_eye_sharp),
+                            border: const OutlineInputBorder(),
+                            suffix: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  passToggle = !passToggle;
+                                });
+                              },
+                              child: Icon(passToggle
+                                  ? Icons.visibility_off
+                                  : Icons.visibility),
                             ),
                           ),
                         ),
@@ -56,7 +76,7 @@ class LoginScreen extends StatelessWidget {
                         Align(
                             alignment: Alignment.centerRight,
                             child: TextButton(
-                                onPressed: () {}, child: Text(foPass))),
+                                onPressed: () {}, child: const Text(foPass))),
                         SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -70,17 +90,17 @@ class LoginScreen extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Text("OR"),
+                            const Text("OR"),
                             const SizedBox(height: loginSpace),
                             SizedBox(
                               width: double.infinity,
                               child: OutlinedButton.icon(
-                                  icon: Image(
+                                  icon: const Image(
                                     image: AssetImage(googleIcon),
                                     width: 20.0,
                                   ),
                                   onPressed: () {},
-                                  label: Text(google)),
+                                  label: const Text(google)),
                             ),
                           ],
                         )
