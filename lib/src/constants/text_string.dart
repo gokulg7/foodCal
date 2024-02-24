@@ -18,3 +18,4 @@ const String finProfile = "Let's complete your profile";
 const String knowMore = "It will help us to know more about you!";
 const String dob = "Date of Birth";
 const String weight = "Your Weight";
+const String gender = "Choose Gender";

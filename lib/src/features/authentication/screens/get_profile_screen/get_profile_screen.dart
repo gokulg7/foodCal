@@ -7,8 +7,8 @@ import 'package:mini_proj/src/common_widgets/round_button.dart';
 import 'package:mini_proj/src/constants/text_string.dart';
 import 'package:intl/intl.dart';
 
-
-import '../../../../common_widgets/weight_picker.dart';
+import 'helpers/height_picker.dart';
+import 'helpers/weight_picker.dart';
 
 class GetProfileScreen extends StatefulWidget {
   const GetProfileScreen({super.key});
@@ -22,7 +22,14 @@ class _GetProfileScreen extends State<GetProfileScreen> {
   TextEditingController txtDate = TextEditingController();
   TextEditingController txtWeight = TextEditingController();
   TextEditingController txtHeight = TextEditingController();
+  TextEditingController txtGender = TextEditingController();
 
+  List<Map<String, dynamic>> genders = [
+    {"name": "Male", "icon": Icons.male},
+    {"name": "Female", "icon": Icons.female},
+    {"name": "Other", "icon": Icons.transgender},
+  ];
+  String? selectedGender;
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -46,6 +53,45 @@ class _GetProfileScreen extends State<GetProfileScreen> {
         return WeightPicker(controller: txtWeight);
       },
     );
+  }
+
+  Future<void> _selectHeight(BuildContext context) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return HeightPicker(controller: txtHeight);
+      },
+    );
+  }
+
+  Future<void> _selectGender(BuildContext context) async {
+    final result = await showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Select Gender', style: TextStyle(color: Colors.blue)),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: genders
+                .map((gender) => ListTile(
+              leading: Icon(gender['icon'], color: Colors.black),
+              title: Text(gender['name'], style: TextStyle(color: Colors.black)),
+              onTap: () {
+                Navigator.pop(context, gender['name']);
+              },
+            ))
+                .toList(),
+          ),
+        );
+      },
+    );
+
+    if (result != null) {
+      setState(() {
+        selectedGender = result;
+        txtGender.text = selectedGender!;
+      });
+    }
   }
 
   @override
@@ -84,54 +130,14 @@ class _GetProfileScreen extends State<GetProfileScreen> {
                   padding: const EdgeInsets.symmetric(horizontal: 15.0),
                   child: Column(
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: TColor.lightGray,
-                            borderRadius: BorderRadius.circular(15)),
-                        child: Row(
-                          children: [
-                            Container(
-                                alignment: Alignment.center,
-                                width: 50,
-                                height: 50,
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 15),
-                                child: Image(
-                                  image: const AssetImage(genderIcon),
-                                  width: 20,
-                                  height: 20,
-                                  fit: BoxFit.contain,
-                                  color: TColor.gray,
-                                )),
-                            Expanded(
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton(
-                                  items: ["Male", "Female"]
-                                      .map((name) => DropdownMenuItem(
-                                            value: name,
-                                            child: Text(
-                                              name,
-                                              style: TextStyle(
-                                                  color: TColor.gray,
-                                                  fontSize: 14),
-                                            ),
-                                          ))
-                                      .toList(),
-                                  onChanged: (value) {},
-                                  isExpanded: true,
-                                  hint: Text(
-                                    "Choose Gender",
-                                    style: TextStyle(
-                                        color: TColor.gray, fontSize: 12),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 8,
-                            )
-                          ],
-                        ),
+                      RoundTextField(
+                        controller: txtGender,
+                        hitText: gender,
+                        icon: genderIcon,
+                        readOnly: true,
+                        onTap: () {
+                          _selectGender(context);
+                        },
                       ),
                       SizedBox(
                         height: media.width * 0.04,
@@ -160,35 +166,14 @@ class _GetProfileScreen extends State<GetProfileScreen> {
                       SizedBox(
                         height: media.width * 0.04,
                       ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: RoundTextField(
-                              controller: txtHeight,
-                              hitText: "Your Height",
-                              icon: heightIcon,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          Container(
-                            width: 50,
-                            height: 50,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: TColor.secondaryG,
-                              ),
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                            child: Text(
-                              "CM",
-                              style:
-                                  TextStyle(color: TColor.white, fontSize: 12),
-                            ),
-                          )
-                        ],
+                      RoundTextField(
+                        controller: txtHeight,
+                        hitText: "Your Height",
+                        icon: heightIcon,
+                        readOnly: true,
+                        onTap: (){
+                          _selectHeight(context);
+                        },
                       ),
                       SizedBox(
                         height: media.width * 0.07,
