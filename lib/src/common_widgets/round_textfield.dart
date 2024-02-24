@@ -11,7 +11,9 @@ class RoundTextField extends StatelessWidget {
   final Widget? rigtIcon;
   final bool obscureText;
   final EdgeInsets? margin;
-  const RoundTextField({super.key, required this.hitText, required this.icon, this.controller, this.margin, this.keyboardType, this.obscureText = false , this.rigtIcon });
+  final bool readOnly;
+  final VoidCallback? onTap;
+  const RoundTextField({super.key, required this.hitText, required this.icon, this.controller, this.margin, this.keyboardType, this.obscureText = false , this.rigtIcon , this.onTap , this.readOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,8 @@ class RoundTextField extends StatelessWidget {
       child: TextField(
         controller: controller,
         keyboardType: keyboardType,
+        readOnly: readOnly,
+        onTap: onTap,
         obscureText: obscureText,
         decoration: InputDecoration(
             contentPadding:
