@@ -13,3 +13,8 @@ const String google = "Sign-in with Google";
 const String email = "E-Mail";
 const String confPass = "Confirm Password";
 const String signUp = "Sign-Up";
+//profile
+const String finProfile = "Let's complete your profile";
+const String knowMore = "It will help us to know more about you";
+const String dob = "Date of Birth";
+const String weight = "Your Weight";

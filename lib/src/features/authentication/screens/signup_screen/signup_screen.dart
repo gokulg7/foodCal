@@ -3,6 +3,7 @@ import 'package:mini_proj/src/constants/sizes.dart';
 import 'package:mini_proj/src/constants/colors.dart';
 import 'package:mini_proj/src/constants/image_strings.dart';
 import 'package:mini_proj/src/constants/text_string.dart';
+import 'package:mini_proj/src/features/authentication/screens/get_profile_screen/get_profile_screen.dart';
 import 'package:mini_proj/src/features/authentication/screens/login_screen/login_screen.dart';
 import 'package:mini_proj/src/features/authentication/screens/signup_screen/validation/validation.dart';
 
@@ -136,6 +137,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                 if (formField.currentState!.validate()) {
                                   print("Success");
                                 }
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                      const GetProfileScreen()),
+                                );
                               },
                               child: Text(
                                 signUp.toUpperCase(),
