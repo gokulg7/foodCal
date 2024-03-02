@@ -1,7 +1,6 @@
 import 'package:mini_proj/src/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:mini_proj/src/constants/image_strings.dart';
-import 'package:mini_proj/src/features/authentication/screens/welcome_screen/welcome_screen.dart';
 import 'package:mini_proj/src/common_widgets/round_textfield.dart';
 import 'package:mini_proj/src/common_widgets/round_button.dart';
 import 'package:mini_proj/src/constants/text_string.dart';
@@ -23,6 +22,7 @@ class _GetProfileScreen extends State<GetProfileScreen> {
   TextEditingController txtWeight = TextEditingController();
   TextEditingController txtHeight = TextEditingController();
   TextEditingController txtGender = TextEditingController();
+  TextEditingController txtPhoneNum = TextEditingController();
 
   List<Map<String, dynamic>> genders = [
     {"name": "Male", "icon": Icons.male},
@@ -30,6 +30,8 @@ class _GetProfileScreen extends State<GetProfileScreen> {
     {"name": "Other", "icon": Icons.transgender},
   ];
   String? selectedGender;
+
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -143,10 +145,25 @@ class _GetProfileScreen extends State<GetProfileScreen> {
                         height: media.width * 0.04,
                       ),
                       RoundTextField(
+                        controller: txtPhoneNum,
+                        hitText: number,
+                        icon: phoneIcon,
+                        readOnly: false,
+                      ),
+                      SizedBox(
+                        height: media.width * 0.04,
+                      ),
+                      RoundTextField(
                         controller: txtDate,
                         hitText: "Date of Birth",
                         icon: dobIcon,
                         readOnly: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Date of Birth cannot be empty';
+                            }
+                            return null;
+                          },
                         onTap: () {
                           _selectDate(context); // Open DatePicker when the text field is tapped
                         },
@@ -181,11 +198,9 @@ class _GetProfileScreen extends State<GetProfileScreen> {
                       RoundButton(
                           title: "Next >",
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const WelcomeScreen()));
+                            if(_formKey.currentState!.validate()){
+                              print('valid');
+                            }
                           }),
                     ],
                   ),

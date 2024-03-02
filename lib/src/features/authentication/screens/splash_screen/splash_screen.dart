@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mini_proj/src/constants/colors.dart';
-import 'package:mini_proj/src/constants/image_strings.dart';
-import 'package:mini_proj/src/constants/sizes.dart';
-import 'package:mini_proj/src/constants/text_string.dart';
-import 'package:mini_proj/src/features/authentication/screens/home_screen/home_screen.dart';
+import 'package:lottie/lottie.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,74 +9,31 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
-  bool animate = false;
-
-  @override
-  void initState() {
-    startAnimation();
-  }
-
   @override
   Widget build(BuildContext context) {
+    var media = MediaQuery.of(context).size;
     return Scaffold(
-      body: SafeArea(
-        child: Stack(
+      body: SizedBox(
+        width: media.width,
+        child:  Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 1600),
-              top: animate ? 0 : -30,
-              left: animate ? 0 : -30,
-              child: Image(
-                image: AssetImage(homeIcon),
-                width: 100,
-                height: 100,
-              ),
+            const Spacer(),
+            Lottie.network(
+              'https://lottie.host/32a38ac6-0b4c-4c35-b2b8-dafa717d6a3c/1eMfed2KKr.json',
+              width: 200,
+              height: 200,
             ),
-            const Positioned(
-              top: 100,
-              left: defaultSize,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    appName,
-                    style: TextStyle(fontFamily: 'IndieFlower'),
-                  ),
-                  Text(appTagLine)
-                ],
-              ),
+            const Text(
+              "AppName",
+              style: TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.w700),
             ),
-            const Positioned(
-              bottom: 150,
-              width: 400,
-              height: 400,
-              child: Image(image: AssetImage(splashImage)),
-            ),
-            Positioned(
-              bottom: 40,
-              right: defaultSize,
-              child: Container(
-                width: splashContainerSize,
-                height: splashContainerSize,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(100),
-                  color: primaryColor,
-                ),
-              ),
-            ),
+            const Spacer(),
           ],
         ),
       ),
     );
-  }
-
-  Future startAnimation() async{
-    await Future.delayed(Duration(milliseconds: 500));
-    setState(() {
-      animate = true;
-    });
-    await Future.delayed(Duration(milliseconds: 5000));
-    //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen));
   }
 }

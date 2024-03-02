@@ -5,7 +5,8 @@ import 'package:mini_proj/src/constants/image_strings.dart';
 import 'package:mini_proj/src/constants/text_string.dart';
 import 'package:mini_proj/src/features/authentication/screens/get_profile_screen/get_profile_screen.dart';
 import 'package:mini_proj/src/features/authentication/screens/login_screen/login_screen.dart';
-import 'package:mini_proj/src/features/authentication/screens/signup_screen/validation/validation.dart';
+import '../../../../common/validation/validation.dart';
+
 
 
 class SignupScreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _SignupScreenState extends State<SignupScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image(
-                  image: const AssetImage(splashImage),
+                  image: const AssetImage(sigNupGi),
                   height: size.height * 0.2,
                 ),
                 const Text(wellBak),

@@ -39,6 +39,7 @@ dependencies:
   animated_weight_picker: ^1.0.0
   bottom_picker: ^2.4.0
   intl: ^0.17.0
+  animated_toggle_switch: ^0.6.2
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +68,7 @@ flutter:
      - assets/images/
      - assets/logo/
      - assets/icons/
+     - assets/gif/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

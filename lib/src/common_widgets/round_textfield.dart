@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 import 'package:mini_proj/src/constants/colors.dart';
 
 class RoundTextField extends StatelessWidget {
@@ -13,7 +11,10 @@ class RoundTextField extends StatelessWidget {
   final EdgeInsets? margin;
   final bool readOnly;
   final VoidCallback? onTap;
-  const RoundTextField({super.key, required this.hitText, required this.icon, this.controller, this.margin, this.keyboardType, this.obscureText = false , this.rigtIcon , this.onTap , this.readOnly = false});
+  final String? Function(String?)? validator;
+
+  const RoundTextField({super.key, required this.hitText, required this.icon,this.controller, this.margin, this.keyboardType, this.obscureText = false , this.rigtIcon , this.onTap , this.readOnly = false, this.validator});
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +22,11 @@ class RoundTextField extends StatelessWidget {
       margin: margin,
       decoration: BoxDecoration(
           color: TColor.lightGray, borderRadius: BorderRadius.circular(15)),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         keyboardType: keyboardType,
         readOnly: readOnly,
+        validator: validator,
         onTap: onTap,
         obscureText: obscureText,
         decoration: InputDecoration(

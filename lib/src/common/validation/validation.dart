@@ -34,4 +34,36 @@ class Validation {
       return null;
     }
   }
+
+  static String? validateGender(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Select Gender";
+    } else {
+      return null;
+    }
+  }
+
+  static String? validateDob(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Select Date of birth";
+    } else {
+      return null;
+    }
+  }
+
+  static String? validateWeight(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Select Weight";
+    } else {
+      return null;
+    }
+  }
+
+  static String? validateHeight(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Select Height";
+    } else {
+      return null;
+    }
+  }
 }
