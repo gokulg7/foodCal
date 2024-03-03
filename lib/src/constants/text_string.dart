@@ -8,6 +8,7 @@ const String loginAcc = "Login to access your account";
 const String uName = "User Name";
 const String uPassword = "Password";
 const String foPass = "Forget Password?";
+const String newUse = "New User?";
 const String google = "Sign-in with Google";
 
 const String email = "E-Mail";

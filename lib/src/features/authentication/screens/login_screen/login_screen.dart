@@ -3,6 +3,7 @@ import 'package:mini_proj/src/constants/colors.dart';
 import 'package:mini_proj/src/constants/image_strings.dart';
 import 'package:mini_proj/src/constants/sizes.dart';
 import 'package:mini_proj/src/constants/text_string.dart';
+import 'package:mini_proj/src/features/authentication/screens/signup_screen/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -21,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryColor,
+        backgroundColor: Colors.grey[300],
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(defaultSize),
@@ -29,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image(
-                  image: const AssetImage(splashTopIcon),
+                  image: const AssetImage(splashImage),
                   height: size.height * 0.2,
                 ),
                 const Text(wellBak),
@@ -44,6 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           keyboardType: TextInputType.text,
                           controller: nameController,
                           decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 20),
                             prefixIcon: Icon(Icons.person_outline_outlined),
                             labelText: uName,
                             hintText: uName,
@@ -56,6 +59,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           controller: passController,
                           obscureText: passToggle,
                           decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 17, horizontal: 17),
                             prefixIcon: const Icon(Icons.fingerprint),
                             labelText: uPassword,
                             hintText: uPassword,
@@ -73,10 +78,23 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         const SizedBox(height: loginSpace),
-                        Align(
-                            alignment: Alignment.centerRight,
-                            child: TextButton(
-                                onPressed: () {}, child: const Text(foPass))),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const SignupScreen()),
+                                  );
+                                }, child: const Text(newUse)),
+
+                            TextButton(
+                                onPressed: () {}, child: const Text(foPass)),
+                          ],
+                        ),
                         SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -84,7 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   backgroundColor: accentColor,
                                   foregroundColor: darkColor),
                               onPressed: () {},
-                              child: Text(login.toUpperCase()),
+                              child: Text(
+                                login.toUpperCase(),
+                                style: const TextStyle(color: whiteColor),
+                              ),
                             )),
                         const SizedBox(height: loginSpace),
                         Column(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mini_proj/src/features/authentication/screens/get_profile_screen/get_profile_screen.dart';
+import 'package:mini_proj/src/features/authentication/screens/login_screen/login_screen.dart';
+import 'package:mini_proj/src/features/authentication/screens/main_tab/main_tab_view.dart';
 import 'package:mini_proj/src/features/authentication/screens/signup_screen/signup_screen.dart';
-import 'package:mini_proj/src/main_tab/main_tab_view.dart';
 import 'package:mini_proj/src/utils/themes/theme.dart';
 
 void main() => runApp(const App());

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:mini_proj/src/constants/image_strings.dart';
+import 'package:mini_proj/src/features/authentication/screens/add_nutrients_screen/add_nutrients.dart';
+import 'package:mini_proj/src/features/authentication/screens/main_tab/select_view.dart';
 import 'package:mini_proj/src/features/authentication/screens/profile_screen/profile_view.dart';
-import 'package:mini_proj/src/main_tab/select_view.dart';
-import '../common_widgets/tab_button.dart';
-import '../constants/colors.dart';
-import '../features/authentication/screens/home_screen/home_view.dart';
-import '../features/authentication/screens/scan_food_screen/scan_food.dart';
+import '../../../../common_widgets/tab_button.dart';
+import '../../../../constants/colors.dart';
+import '../home_screen/home_view.dart';
+import '../scan_food_screen/scan_food.dart';
 
 class MainTabView extends StatefulWidget {
   const MainTabView({super.key});
@@ -28,7 +29,13 @@ class _MainTabViewState extends State<MainTabView> {
         width: 70,
         height: 70,
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            selectTab = 4;
+            currentTab = const AddNutrients();
+            if (mounted) {
+              setState(() {});
+            }
+          },
           child: Container(
             width: 65,
             height: 65,
@@ -42,7 +49,7 @@ class _MainTabViewState extends State<MainTabView> {
                       color: Colors.black12,
                       blurRadius: 2,)
                 ]),
-            child: Icon(Icons.search,color: TColor.white, size: 35, ),
+            child: Icon(Icons.add,color: TColor.white, size: 35, ),
           ),
         ),
       ),

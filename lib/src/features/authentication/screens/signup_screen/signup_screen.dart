@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_proj/src/common_widgets/round_textfield.dart';
 import 'package:mini_proj/src/constants/sizes.dart';
 import 'package:mini_proj/src/constants/colors.dart';
 import 'package:mini_proj/src/constants/image_strings.dart';
@@ -30,7 +31,7 @@ class _SignupScreenState extends State<SignupScreen> {
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: primaryColor,
+        backgroundColor: Colors.grey[300],
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(defaultSize),
@@ -38,7 +39,7 @@ class _SignupScreenState extends State<SignupScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image(
-                  image: const AssetImage(sigNupGi),
+                  image: const AssetImage(splashImage),
                   height: size.height * 0.2,
                 ),
                 const Text(wellBak),
@@ -54,6 +55,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           keyboardType: TextInputType.text,
                           controller: nameController,
                           decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                             prefixIcon: Icon(Icons.person_outline_outlined),
                             labelText: uName,
                             hintText: uName,
@@ -66,6 +68,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           keyboardType: TextInputType.emailAddress,
                           controller: emailController,
                           decoration: const InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
                             prefixIcon: Icon(Icons.email_outlined),
                             labelText: email,
                             hintText: email,
@@ -79,6 +82,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           controller: passController,
                           obscureText: passToggle,
                           decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(vertical: 17, horizontal: 17),
                             prefixIcon: const Icon(Icons.fingerprint),
                             labelText: uPassword,
                             hintText: uPassword,
@@ -102,6 +106,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           controller: confPassController,
                           obscureText: passToggle,
                           decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(vertical: 17, horizontal: 17),
                             prefixIcon: const Icon(Icons.fingerprint),
                             labelText: confPass,
                             hintText: confPass,
@@ -138,12 +143,12 @@ class _SignupScreenState extends State<SignupScreen> {
                                 if (formField.currentState!.validate()) {
                                   print("Success");
                                 }
-                                Navigator.push(
+                                /*Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
                                       const GetProfileScreen()),
-                                );
+                                );*/
                               },
                               child: Text(
                                 signUp.toUpperCase(),
