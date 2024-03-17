@@ -5,6 +5,8 @@ const String login = "Login";
 
 const String wellBak = "Welcome Back,";
 const String loginAcc = "Login to access your account";
+const String hey = "Hey there,";
+const String create = "Create an Account";
 const String uName = "User Name";
 const String uPassword = "Password";
 const String foPass = "Forget Password?";

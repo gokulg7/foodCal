@@ -12,8 +12,9 @@ class RoundTextField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
 
-  const RoundTextField({super.key, required this.hitText, required this.icon,this.controller, this.margin, this.keyboardType, this.obscureText = false , this.rigtIcon , this.onTap , this.readOnly = false, this.validator});
+  const RoundTextField({super.key, required this.hitText, required this.icon,this.controller, this.margin, this.keyboardType, this.obscureText = false , this.rigtIcon , this.onTap , this.readOnly = false, this.validator, this.onChanged});
 
 
   @override
@@ -28,6 +29,7 @@ class RoundTextField extends StatelessWidget {
         readOnly: readOnly,
         validator: validator,
         onTap: onTap,
+        onChanged: onChanged,
         obscureText: obscureText,
         decoration: InputDecoration(
             contentPadding:

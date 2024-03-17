@@ -5,6 +5,7 @@ import 'package:mini_proj/src/common_widgets/round_textfield.dart';
 import 'package:mini_proj/src/common_widgets/round_button.dart';
 import 'package:mini_proj/src/constants/text_string.dart';
 import 'package:intl/intl.dart';
+import 'package:mini_proj/src/features/authentication/screens/main_tab/main_tab_view.dart';
 
 import 'helpers/height_picker.dart';
 import 'helpers/weight_picker.dart';
@@ -31,7 +32,17 @@ class _GetProfileScreen extends State<GetProfileScreen> {
   ];
   String? selectedGender;
 
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool isButtonEnabled = false;
+
+  void checkFields() {
+    setState(() {
+      isButtonEnabled = txtDate.text.isNotEmpty &&
+          txtWeight.text.isNotEmpty &&
+          txtHeight.text.isNotEmpty &&
+          txtGender.text.isNotEmpty &&
+          txtPhoneNum.text.isNotEmpty;
+    });
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -43,7 +54,8 @@ class _GetProfileScreen extends State<GetProfileScreen> {
     if (picked != null) {
       final formattedDate = DateFormat('dd/MM/yyyy').format(picked);
       setState(() {
-        txtDate.text = formattedDate; // Update the text field with the selected date
+        txtDate.text = formattedDate;// Update the text field with the selected date
+        checkFields();
       });
     }
   }
@@ -54,7 +66,7 @@ class _GetProfileScreen extends State<GetProfileScreen> {
       builder: (BuildContext context) {
         return WeightPicker(controller: txtWeight);
       },
-    );
+    ).then((_) => checkFields());
   }
 
   Future<void> _selectHeight(BuildContext context) async {
@@ -63,7 +75,7 @@ class _GetProfileScreen extends State<GetProfileScreen> {
       builder: (BuildContext context) {
         return HeightPicker(controller: txtHeight);
       },
-    );
+    ).then((_) => checkFields());
   }
 
   Future<void> _selectGender(BuildContext context) async {
@@ -92,6 +104,7 @@ class _GetProfileScreen extends State<GetProfileScreen> {
       setState(() {
         selectedGender = result;
         txtGender.text = selectedGender!;
+        checkFields();
       });
     }
   }
@@ -137,6 +150,7 @@ class _GetProfileScreen extends State<GetProfileScreen> {
                         hitText: gender,
                         icon: genderIcon,
                         readOnly: true,
+                        onChanged: (_) => checkFields(),
                         onTap: () {
                           _selectGender(context);
                         },
@@ -147,6 +161,7 @@ class _GetProfileScreen extends State<GetProfileScreen> {
                       RoundTextField(
                         controller: txtPhoneNum,
                         hitText: number,
+                        onChanged: (_) => checkFields(),
                         icon: phoneIcon,
                         readOnly: false,
                       ),
@@ -156,14 +171,9 @@ class _GetProfileScreen extends State<GetProfileScreen> {
                       RoundTextField(
                         controller: txtDate,
                         hitText: "Date of Birth",
+                        onChanged: (_) => checkFields(),
                         icon: dobIcon,
                         readOnly: true,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Date of Birth cannot be empty';
-                            }
-                            return null;
-                          },
                         onTap: () {
                           _selectDate(context); // Open DatePicker when the text field is tapped
                         },
@@ -174,6 +184,7 @@ class _GetProfileScreen extends State<GetProfileScreen> {
                       RoundTextField(
                         controller: txtWeight,
                         hitText: "Your Weight",
+                        onChanged: (_) => checkFields(),
                         readOnly: true,
                         icon: weightIcon,
                         onTap: () {
@@ -185,6 +196,7 @@ class _GetProfileScreen extends State<GetProfileScreen> {
                       ),
                       RoundTextField(
                         controller: txtHeight,
+                        onChanged: (_) => checkFields(),
                         hitText: "Your Height",
                         icon: heightIcon,
                         readOnly: true,
@@ -195,13 +207,39 @@ class _GetProfileScreen extends State<GetProfileScreen> {
                       SizedBox(
                         height: media.width * 0.07,
                       ),
-                      RoundButton(
+                      /*RoundButton(
                           title: "Next >",
-                          onPressed: () {
-                            if(_formKey.currentState!.validate()){
-                              print('valid');
-                            }
-                          }),
+
+                          onPressed: isButtonEnabled ? () {
+                            print('haii');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                  const MainTabView()),
+                            );
+                          } : null,
+                      ),*/
+                      SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: isButtonEnabled ? accentColor : Colors.transparent,
+                                foregroundColor: isButtonEnabled ? darkColor : Colors.transparent,),
+                            onPressed: isButtonEnabled ? () {
+                              print('haii');
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const MainTabView()),
+                              );
+                            } : null,
+                            child: const Text(
+                              "Next >",
+                              style: TextStyle(color: whiteColor),
+                            ),
+                          )),
                     ],
                   ),
                 ),

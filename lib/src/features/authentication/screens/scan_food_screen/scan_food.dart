@@ -31,7 +31,7 @@ class ScanFood extends StatelessWidget {
                   color: TColor.lightGray,
                   borderRadius: BorderRadius.circular(10)),
               child: Image.asset(
-                "assets/img/more_btn.png",
+                "assets/images/more_btn.png",
                 width: 15,
                 height: 15,
                 fit: BoxFit.contain,
@@ -39,6 +39,30 @@ class ScanFood extends StatelessWidget {
             ),
           )
         ],
+      ),
+      backgroundColor: TColor.white,
+      body: const SingleChildScrollView(
+        child: Column(),
+      ),
+      floatingActionButton: InkWell(
+        onTap: () {},
+        child: Container(
+          width: 55,
+          height: 55,
+          decoration: BoxDecoration(
+              gradient: LinearGradient(colors: TColor.secondaryG),
+              borderRadius: BorderRadius.circular(27.5),
+              boxShadow: const [
+                BoxShadow(
+                    color: Colors.black12, blurRadius: 5, offset: Offset(0, 2))
+              ]),
+          alignment: Alignment.center,
+          child: Icon(
+            Icons.photo_camera,
+            size: 20,
+            color: TColor.white,
+          ),
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mini_proj/src/common_widgets/highlighted_rtextfield.dart';
 import 'package:mini_proj/src/constants/colors.dart';
 import 'package:mini_proj/src/constants/image_strings.dart';
 import 'package:mini_proj/src/constants/sizes.dart';
@@ -22,7 +23,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(defaultSize),
@@ -33,25 +34,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   image: const AssetImage(splashImage),
                   height: size.height * 0.2,
                 ),
-                const Text(wellBak),
-                const Text(loginAcc),
+                const Text(wellBak, style: TextStyle(color: Colors.black)),
+                const Text(loginAcc, style: TextStyle(color: Colors.black)),
                 Form(
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 20.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextFormField(
+                        HighlightRoundTextField(
                           keyboardType: TextInputType.text,
+                          labelText: uName,
                           controller: nameController,
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 20),
-                            prefixIcon: Icon(Icons.person_outline_outlined),
-                            labelText: uName,
-                            hintText: uName,
-                            border: OutlineInputBorder(),
-                          ),
+                          prefixIcon: const Icon(Icons.person_outline_outlined,
+                              color: darkColor),
                         ),
                         const SizedBox(height: defaultSize),
                         TextFormField(
@@ -60,20 +56,42 @@ class _LoginScreenState extends State<LoginScreen> {
                           obscureText: passToggle,
                           decoration: InputDecoration(
                             contentPadding: const EdgeInsets.symmetric(
-                                vertical: 17, horizontal: 17),
-                            prefixIcon: const Icon(Icons.fingerprint),
+                                vertical: 20, horizontal: 20),
+                            prefixIcon:
+                                const Icon(Icons.fingerprint, color: darkColor),
                             labelText: uPassword,
-                            hintText: uPassword,
-                            border: const OutlineInputBorder(),
+                            labelStyle: const TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              // Adjust the radius as needed
+                              borderSide:
+                                  const BorderSide(color: Colors.transparent),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              // Adjust the radius as needed
+                              borderSide: const BorderSide(
+                                  color: Colors.blue), // Color when focused
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              // Adjust the radius as needed
+                              borderSide: const BorderSide(
+                                  color: Colors
+                                      .transparent), // Color when enabled but not focused
+                            ),
                             suffix: InkWell(
                               onTap: () {
                                 setState(() {
                                   passToggle = !passToggle;
                                 });
                               },
-                              child: Icon(passToggle
-                                  ? Icons.visibility_off
-                                  : Icons.visibility),
+                              child: Icon(
+                                passToggle
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.blue,
+                              ),
                             ),
                           ),
                         ),
@@ -87,10 +105,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const SignupScreen()),
+                                            const SignupScreen()),
                                   );
-                                }, child: const Text(newUse)),
-
+                                },
+                                child: const Text(newUse)),
                             TextButton(
                                 onPressed: () {}, child: const Text(foPass)),
                           ],

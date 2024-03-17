@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mini_proj/src/common_widgets/round_textfield.dart';
+import 'package:mini_proj/src/common_widgets/highlighted_rtextfield.dart';
 import 'package:mini_proj/src/constants/sizes.dart';
 import 'package:mini_proj/src/constants/colors.dart';
 import 'package:mini_proj/src/constants/image_strings.dart';
@@ -7,8 +7,6 @@ import 'package:mini_proj/src/constants/text_string.dart';
 import 'package:mini_proj/src/features/authentication/screens/get_profile_screen/get_profile_screen.dart';
 import 'package:mini_proj/src/features/authentication/screens/login_screen/login_screen.dart';
 import '../../../../common/validation/validation.dart';
-
-
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -18,7 +16,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> {
-
   final formField = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final nameController = TextEditingController();
@@ -31,7 +28,7 @@ class _SignupScreenState extends State<SignupScreen> {
     final size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: TColor.white,
         body: SingleChildScrollView(
           child: Container(
             padding: const EdgeInsets.all(defaultSize),
@@ -42,8 +39,8 @@ class _SignupScreenState extends State<SignupScreen> {
                   image: const AssetImage(splashImage),
                   height: size.height * 0.2,
                 ),
-                const Text(wellBak),
-                const Text(loginAcc),
+                const Text(hey, style: TextStyle(color: Colors.black),),
+                const Text(create, style: TextStyle(color: Colors.black),),
                 Form(
                   key: formField,
                   child: Container(
@@ -51,88 +48,120 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        TextFormField(
-                          keyboardType: TextInputType.text,
-                          controller: nameController,
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                            prefixIcon: Icon(Icons.person_outline_outlined),
+                        HighlightRoundTextField(
+                            keyboardType: TextInputType.text,
+                            controller: nameController,
                             labelText: uName,
-                            hintText: uName,
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: Validation.validateUsername,
-                        ),
+                            prefixIcon:
+                                const Icon(Icons.person_outline_outlined, color: Colors.black,),
+                            validator: Validation.validateUsername),
                         const SizedBox(height: defaultSize),
-                        TextFormField(
-                          keyboardType: TextInputType.emailAddress,
-                          controller: emailController,
-                          decoration: const InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                            prefixIcon: Icon(Icons.email_outlined),
+                        HighlightRoundTextField(
+                            keyboardType: TextInputType.emailAddress,
+                            controller: emailController,
                             labelText: email,
-                            hintText: email,
-                            border: OutlineInputBorder(),
-                          ),
-                          validator: Validation.validateEmail,
-                        ),
+                            prefixIcon: const Icon(Icons.email_outlined, color: Colors.black,),
+                            validator: Validation.validateEmail),
                         const SizedBox(height: defaultSize),
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           controller: passController,
                           obscureText: passToggle,
+                          validator: Validation.validatePassword,
                           decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(vertical: 17, horizontal: 17),
-                            prefixIcon: const Icon(Icons.fingerprint),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 20),
+                            prefixIcon: const Icon(Icons.fingerprint, color: Colors.black,),
                             labelText: uPassword,
-                            hintText: uPassword,
-                            border: const OutlineInputBorder(),
+                            labelStyle: const TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              // Adjust the radius as needed
+                              borderSide:
+                                  const BorderSide(color: Colors.transparent),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              // Adjust the radius as needed
+                              borderSide: const BorderSide(
+                                  color: Colors.blue), // Color when focused
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              // Adjust the radius as needed
+                              borderSide: const BorderSide(
+                                  color: Colors
+                                      .transparent), // Color when enabled but not focused
+                            ),
                             suffix: InkWell(
                               onTap: () {
                                 setState(() {
                                   passToggle = !passToggle;
                                 });
                               },
-                              child: Icon(passToggle
-                                  ? Icons.visibility_off
-                                  : Icons.visibility),
+                              child: Icon(
+                                passToggle
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.blue,
+                              ),
                             ),
                           ),
-                          validator: Validation.validatePassword,
                         ),
                         const SizedBox(height: defaultSize),
                         TextFormField(
                           keyboardType: TextInputType.emailAddress,
                           controller: confPassController,
                           obscureText: passToggle,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "Enter Password";
+                            } else if (value != passController.text) {
+                              return 'Passwords do not match';
+                            }
+                            return null;
+                          },
                           decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.symmetric(vertical: 17, horizontal: 17),
-                            prefixIcon: const Icon(Icons.fingerprint),
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 20),
+                            prefixIcon: const Icon(Icons.fingerprint, color: Colors.black,),
                             labelText: confPass,
-                            hintText: confPass,
-                            border: const OutlineInputBorder(),
+                            labelStyle: const TextStyle(color: Colors.black),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              // Adjust the radius as needed
+                              borderSide:
+                                  const BorderSide(color: Colors.transparent),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              // Adjust the radius as needed
+                              borderSide: const BorderSide(
+                                  color: Colors.blue), // Color when focused
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                              // Adjust the radius as needed
+                              borderSide: const BorderSide(
+                                  color: Colors
+                                      .transparent), // Color when enabled but not focused
+                            ),
                             suffix: InkWell(
                               onTap: () {
                                 setState(() {
                                   passToggle = !passToggle;
                                 });
                               },
-                              child: Icon(passToggle
-                                  ? Icons.visibility_off
-                                  : Icons.visibility),
+                              child: Icon(
+                                passToggle
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                                color: Colors.blue,
+                              ),
                             ),
                           ),
-                          validator: (value){
-                            if (value!.isEmpty) {
-                              return "Enter Password";
-                            }
-                            else if (value != passController.text) {
-                              return 'Passwords do not match';
-                            }
-                            return null;
-                        },
                         ),
-                        const SizedBox(height: loginGap),
+                        const SizedBox(height: loginSpace),
                         SizedBox(
                             width: double.infinity,
                             child: ElevatedButton(
@@ -141,14 +170,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                   foregroundColor: darkColor),
                               onPressed: () {
                                 if (formField.currentState!.validate()) {
-                                  print("Success");
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const GetProfileScreen()),
+                                  );
                                 }
-                                /*Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                      const GetProfileScreen()),
-                                );*/
                               },
                               child: Text(
                                 signUp.toUpperCase(),
